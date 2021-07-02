@@ -2,6 +2,10 @@
 # @Time    : 2021/7/1 23:13
 # @Author  : wkRonin
 # @File    :main_page.py
+import logging
+
+import allure
+
 from homework0701.po.basepage import BasePage
 from homework0701.po.contact_page import ContactPage
 
@@ -12,4 +16,7 @@ class MainPage(BasePage):
     def goto_contact(self):
         # 点击通讯录
         # 进入通讯录页
+        with allure.step('点击通讯录'):
+            self.uiauto_find('new UiSelector().resourceId("com.tencent.wework:id/e0y").text("通讯录")').click()
+            logging.info('点击通讯录进入通讯录页')
         return ContactPage(self.driver)
