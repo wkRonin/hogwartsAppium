@@ -16,7 +16,7 @@ class TestAddMember:
         self.main = MainPage()
 
     def teardown(self):
-        pass
+        self.main.driver.quit()
 
     @allure.title('添加成员')
     @pytest.mark.parametrize("name,phone", [
