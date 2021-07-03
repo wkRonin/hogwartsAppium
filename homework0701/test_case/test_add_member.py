@@ -20,12 +20,12 @@ class TestAddMember:
 
     @allure.title('添加成员')
     @pytest.mark.parametrize("name,phone", [
-        ("姜二", "13836542585")
+        ("姜三", "13836542586")
     ])
     def test_add_member(self, name, phone):
         result = self.main.goto_contact().click_add_member().click_manual_input().\
             edit_member(name, phone).get_toast_text()
-        self.main.save_screenshot('../img/addsuccess.png', '添加成员成功截图')
+        self.main.save_screenshot('../img/addsuccess3.png', '添加成员成功截图')
         assert result == '添加成功'
 
 
