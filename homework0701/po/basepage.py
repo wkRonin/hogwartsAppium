@@ -45,8 +45,7 @@ class BasePage:
         element: WebElement = WebDriverWait(self.driver, timeout).until(
             lambda x: x.find_element(by, locator)
         )
-        toast_text = self.find(by, locator).text
-        logging.info(f'toast: {toast_text}')
+        toast_text = element.text
         return toast_text
 
     def find(self, by, locator):
