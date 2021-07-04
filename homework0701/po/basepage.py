@@ -10,6 +10,11 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 # 页面基类
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+
 class BasePage:
 
     def __init__(self, driver: WebDriver = None):
@@ -40,7 +45,7 @@ class BasePage:
         self.find(by, locator).click()
 
     def find_and_sendkeys(self, by, locator, value):
-        self.find(by, locator).sendkeys(value)
+        self.find(by, locator).send_keys(value)
 
     def save_screenshot(self, path, stepname):
         """
@@ -67,7 +72,7 @@ class BasePage:
                 self.driver.implicitly_wait(5)
                 return element
             except:
-                logging.info(f"第{i}次未找到")
+                logging.info(f"第{i+1}次未找到")
                 size = self.driver.get_window_size()
                 width = size['width']
                 height = size['height']
@@ -87,3 +92,12 @@ class BasePage:
     def back(self, num=3):
         for i in range(num):
             self.driver.back()
+
+    def finds(self, by, locator):
+        return self.driver.find_elements(by, locator)
+
+    def wait_for_click(self, locator, timeout=10):
+        element: WebElement = WebDriverWait(self.driver, timeout).until(
+            expected_conditions.element_to_be_clickable(locator))
+        element.click()
+        return element

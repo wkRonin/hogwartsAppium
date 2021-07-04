@@ -3,11 +3,10 @@
 # @Author  : wkRonin
 # @File    :test_add_member.py
 import allure
-import pytest
 from faker import Faker
 
 from homework0701.po.app import App
-from homework0701.po.main_page import MainPage
+
 
 @allure.feature('企业微信app测试')
 @allure.story('通讯录测试')
