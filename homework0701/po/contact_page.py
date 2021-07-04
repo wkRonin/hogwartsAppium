@@ -18,10 +18,11 @@ class ContactPage(BasePage):
         # 点击添加成员
         # 进入选择添加成员方式页
         with allure.step('点击添加成员'):
-            self.find(MobileBy.ANDROID_UIAUTOMATOR,
-                      'new UiScrollable(new UiSelector().scrollable(true).\
-                      instance(0)).scrollIntoView(new UiSelector().\
-                      text("添加成员").instance(0));').click()
+            # self.find(MobileBy.ANDROID_UIAUTOMATOR,
+            #           'new UiScrollable(new UiSelector().scrollable(true).\
+            #           instance(0)).scrollIntoView(new UiSelector().\
+            #           text("添加成员").instance(0));').click()
+            self.swipe_find('添加成员')
             logging.info('点击添加成员')
         return ChooseMemberMethodPage(self.driver)
 

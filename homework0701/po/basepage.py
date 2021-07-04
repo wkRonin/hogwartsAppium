@@ -10,6 +10,7 @@ from appium import webdriver
 
 # 页面基类
 from appium.webdriver.common.mobileby import MobileBy
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -42,9 +43,11 @@ class BasePage:
         return ele
 
     def get_toast(self,  locator, by=MobileBy.XPATH, timeout=10):
-        element: WebElement = WebDriverWait(self.driver, timeout).until(
-            lambda x: x.find_element(by, locator)
-        )
+        # toast展示2-3秒自动消失，使用find_element会在隐式等待的时间内查找
+        # element: WebElement = WebDriverWait(self.driver, timeout).until(
+        #     lambda x: x.find_element(by, locator)
+        # )
+        element = self.find(by, locator)
         toast_text = element.text
         return toast_text
 
@@ -63,3 +66,33 @@ class BasePage:
             self.driver.save_screenshot(path)
             allure.attach.file(path, stepname)
 
+    def swipe_find(self, text, num=4):
+        """
+
+        :param text:xpath使用的文本
+        :param num:滑动的次数
+        :return:找到的元素
+        """
+        self.driver.implicitly_wait(1)
+        for i in range(num):
+            try:
+                element = self.find(MobileBy.XPATH, f"//*[@text='{text}']").click()
+                self.driver.implicitly_wait(5)
+                return element
+            except:
+                logging.info("未找到")
+                size = self.driver.get_window_size()
+                width = size['width']
+                height = size['height']
+
+                start_x = width/2
+                start_y = height*0.8
+                end_x = start_x
+                end_y = height*0.3
+                duration = 2000
+
+                self.driver.swipe(start_x, start_y, end_x, end_y, duration)
+
+            if i == num-1:
+
+                raise NoSuchElementException(f'找了{i}次，未找到')

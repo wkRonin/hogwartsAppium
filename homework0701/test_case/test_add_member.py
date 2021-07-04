@@ -20,7 +20,7 @@ class TestAddMember:
 
     @allure.title('添加成员')
     @pytest.mark.parametrize("name,phone", [
-        ("姜五", "13836542588")
+        ("姜十二", "13836542594")
     ])
     def test_add_member(self, name, phone):
         result = self.main.goto_contact().click_add_member().click_manual_input().\

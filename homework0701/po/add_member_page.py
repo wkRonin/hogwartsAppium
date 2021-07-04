@@ -19,7 +19,9 @@ class AddMemberPage(BasePage):
         from homework0701.po.choose_member_method_page import ChooseMemberMethodPage
         with allure.step('编辑成员信息'):
             # 输入姓名
-            self.uiauto_find('new UiSelector().resourceId("com.tencent.wework:id/b09").instance(0)').send_keys(name)
+            # self.uiauto_find('new UiSelector().resourceId("com.tencent.wework:id/b09").instance(0)').send_keys(name)
+            # 和姓名是兄弟节点关系，用父节点去找兄弟节点
+            self.find(MobileBy.XPATH, "//*[contains(@text, '姓名')]/../android.widget.EditText").send_keys(name)
             logging.info(f'输入姓名：{name}')
             # 输入手机号
             self.uiauto_find('new UiSelector().resourceId("com.tencent.wework:id/f7y")').send_keys(phone)
