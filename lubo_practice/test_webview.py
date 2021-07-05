@@ -17,8 +17,12 @@ class TestWebview:
             'platformVersion': '8.0',
             'browserName': 'Chrome',
             'noReset': 'true',
-            'skipDeviceInitialization': 'true',
-            'deviceName': 'emulator-5554',
+            # 'skipDeviceInitialization': 'true',
+            'deviceName': '456456',
+            'chromeOptions': {'w3c': False
+                              # ,'args': ['--no-sandbox']
+                              },
+            'udid': 'emulator-5554',
             'chromedriverExecutable': 'D:\pycharmproject\pythonProject\hogwartsAppium\chromedriver67_69\chromedriver.exe'
         }
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', des_caps)
@@ -34,5 +38,14 @@ class TestWebview:
         self.driver.switch_to.context("NATIVE_APP")
         WebDriverWait(self.driver, 10, 0.5).until(
             expected_conditions.visibility_of_element_located((MobileBy.XPATH, "//*[@text='允许']"))).click()
+        # 切换回浏览器
+        webview = self.driver.contexts[1]
+        self.driver.switch_to.context(webview)
+        # 查询操作
+        self.driver.find_element(MobileBy.ID, 'index-kw').send_keys('appium')
+        search = WebDriverWait(self.driver, 10, 0.5).until(
+            expected_conditions.visibility_of_element_located((MobileBy.ID, 'index-bn'))
+        )
+        search.click()
 
-        sleep(10)
+        sleep(8)
