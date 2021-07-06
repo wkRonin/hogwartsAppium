@@ -23,7 +23,8 @@ class TestWebview:
                               # ,'args': ['--no-sandbox']
                               },
             'udid': 'emulator-5554',
-            'chromedriverExecutable': 'D:\pycharmproject\pythonProject\hogwartsAppium\chromedriver67_69\chromedriver.exe'
+            'chromedriverExecutableDir': 'D:\pycharmproject\pythonProject\hogwartsAppium\chromedriver67_69\chromedriver.exe',
+            'chromedriverChromeMappingFile': 'mapping.json'
         }
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', des_caps)
         self.driver.implicitly_wait(10)
