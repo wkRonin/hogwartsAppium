@@ -17,14 +17,19 @@ class TestWebview:
             'platformVersion': '8.0',
             'browserName': 'Chrome',
             'noReset': 'true',
-            # 'skipDeviceInitialization': 'true',
+            # 'autoGrantPermissions': 'true',
+            'skipDeviceInitialization': 'true',
+            'newCommandTimeout': '300',
+            'showChromedriverLog': 'true',
             'deviceName': '456456',
+            'unicodeKeyboard': 'true',
+            'resetKeyvoard': 'true',
             'chromeOptions': {'w3c': False
-                              # ,'args': ['--no-sandbox']
+                              # 'args': ['--no-sandbox']
                               },
-            'udid': 'emulator-5554',
-            'chromedriverExecutableDir': 'D:\pycharmproject\pythonProject\hogwartsAppium\chromedriver67_69\chromedriver.exe',
-            'chromedriverChromeMappingFile': 'mapping.json'
+            'udid': 'd59c99c6',
+            'chromedriverExecutableDir': 'D:\pycharmproject\pythonProject\hogwartsAppium\chromedrivers',
+            'chromedriverChromeMappingFile': 'D:\pycharmproject\pythonProject\hogwartsAppium\mapping.json'
         }
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', des_caps)
         self.driver.implicitly_wait(10)
@@ -36,13 +41,13 @@ class TestWebview:
         self.driver.get('http://m.baidu.com')
         # 中部弹窗是安卓原生的，底部弹窗才是alert.
         # 解决安卓谷歌浏览器位置权限弹窗
-        self.driver.switch_to.context("NATIVE_APP")
-        WebDriverWait(self.driver, 10, 0.5).until(
-            expected_conditions.visibility_of_element_located((MobileBy.XPATH, "//*[@text='允许']"))).click()
-        # 切换回浏览器
-        webview = self.driver.contexts[1]
-        self.driver.switch_to.context(webview)
-        # 查询操作
+        # self.driver.switch_to.context("NATIVE_APP")
+        # WebDriverWait(self.driver, 10, 0.5).until(
+        #     expected_conditions.visibility_of_element_located((MobileBy.XPATH, "//*[@text='允许']"))).click()
+        # # 切换回浏览器
+        # webview = self.driver.contexts[1]
+        # self.driver.switch_to.context(webview)
+        # # 查询操作
         self.driver.find_element(MobileBy.ID, 'index-kw').send_keys('appium')
         search = WebDriverWait(self.driver, 10, 0.5).until(
             expected_conditions.visibility_of_element_located((MobileBy.ID, 'index-bn'))
